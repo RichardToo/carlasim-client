@@ -1,0 +1,21 @@
+name: carla
+channels:
+- https://conda.anaconda.org/menpo
+- defaults
+- conda-forge
+- anaconda
+dependencies:
+    - python==3.7
+    - numpy
+    - matplotlib
+    - tensorflow-gpu
+    - keras
+    - scikit-learn
+    - opencv
+    - future
+    - pip
+    - pip:
+        - opencv-contrib-python
+        - tensorflow_hub
+        - ipywidgets
+        - pygame

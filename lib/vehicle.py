@@ -23,3 +23,6 @@ class Vehicle:
 
     def wrapped(self):
         return self.__vehicle
+
+    def name(self):
+        return self.__vehicle.type_id

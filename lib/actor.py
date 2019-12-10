@@ -41,9 +41,9 @@ class ActorBuilder:
         return self.__world.spawn_actor(self.__blue_print, self.__spawn_point, attach_to=self.__attach_to)
 
     def __log(self):
-        output = f"Spawning '{self.__blue_print.id}' actor: \n\t- {self.__spawn_point.location}\n\t- {self.__spawn_point.rotation}"
+        output = f"Spawning '{self.__blue_print.id}' actor"
         if self.__attach_to is not None:
-            output += f"\n\t- Attached to: '{self.__attach_to.type_id}' actor."
+            output += f" attached to '{self.__attach_to.type_id}' actor."
         self.__logger.info(output)
 
 

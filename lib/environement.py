@@ -50,7 +50,7 @@ class Environment:
         self.__actors = [self.camera, self.vehicle.wrapped(), self.collision_sensor]
 
     def reset(self):
-        self.__logger.info("Random vehicle relocation...")
+        self.__logger.info(f"Relocate {self.vehicle.name()} actor...")
         self.vehicle.random_location(self.__world)
 
     def loop(self, callback):
@@ -61,6 +61,7 @@ class Environment:
 
     def close(self):
         self.__destroy_actors()
+        self.__logger.info("Close window...")
         self.__game.quit()
 
     def __destroy_actors(self):
@@ -72,7 +73,7 @@ class Environment:
     def __on_collision(self, event):
         if not self.__colliding:
             self.__colliding = True
-            self.__logger.info("Vehicle collide...")
+            self.__logger.info(f"{self.vehicle.name()} vehicle collide...")
             time.sleep(1)
             self.reset()
             self.__colliding = False

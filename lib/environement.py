@@ -1,5 +1,7 @@
 import logging
 
+from carla.libcarla import Location
+
 from lib.actor import build_camera, build_vehicle, Actor
 from lib.pygame_manager import PyGameManager
 from lib.vehicle import Vehicle
@@ -14,13 +16,19 @@ class Environment:
         self.__vehicle = None
         self.__camera = None
         self.__actors = []
-        
+
     def init(self):
-        self.__vehicle = Vehicle(build_vehicle(self.__world, Actor.TESLA_MODEL_3))
-        self.__vehicle.control(throttle=5.0, steer=0.0)
+        self.__vehicle = Vehicle(build_vehicle(
+            self.__world, Actor.TESLA_MODEL_3))
+        self.__vehicle.control(throttle=1.0, steer=0.0)
         self.__game.vehicle(self.__vehicle)
 
-        self.__camera = build_camera(self.__world, self.__screen_size, self.__vehicle)
+        self.__camera = build_camera(
+            self.__world,
+            self.__screen_size,
+            self.__vehicle,
+            Location(x=1.1, z=1.2)
+        )
         self.__camera.listen(self.__game.render)
 
         self.__actors = [self.__camera, self.__vehicle.wrapped()]

@@ -1,8 +1,8 @@
+import logging
 import random
 from enum import Enum
-import logging
 
-from carla.libcarla import Transform, Location
+from carla.libcarla import Transform
 
 
 class Actor(Enum):
@@ -20,7 +20,7 @@ class ActorBuilder:
         self.__logger = logger
 
     def attr(self, name, value):
-        self.__blue_print.set_attribute(name, value)
+        self.__blue_print.set_attribute(name, str(value))
         return self
 
     def spawn_point(self, point):
@@ -52,12 +52,14 @@ def build_vehicle(world, actor_name):
         .build()
 
 
-def build_camera(world, screen_size, vehicle):
+def build_camera(world, screen_size, vehicle, location):
     camera = ActorBuilder(world, Actor.RGB_CAMERA) \
-        .attr('image_size_x', f'{screen_size[0]}') \
-        .attr('image_size_y', f'{screen_size[1]}') \
-        .attr('fov', '110') \
-        .spawn_point(Transform(Location(x=2.5, z=0.7))) \
+        .attr('image_size_x', screen_size[0]) \
+        .attr('image_size_y', screen_size[1]) \
+        .attr('fov', 110) \
+        .attr('sensor_tick', 0.0) \
+        .attr('gamma', 2.2) \
+        .spawn_point(Transform(location)) \
         .attach_to(vehicle.wrapped()) \
         .build()
     return camera

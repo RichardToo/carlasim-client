@@ -1,7 +1,8 @@
 import random
 
+import carla
 import numpy as np
-from carla.libcarla import VehicleControl
+from carla.libcarla import VehicleControl, Vector3D
 
 
 class Vehicle:

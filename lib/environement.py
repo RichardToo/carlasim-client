@@ -1,5 +1,6 @@
 import logging
 import time
+from asyncio import Lock
 
 from carla.libcarla import Location
 
@@ -21,7 +22,7 @@ class Environment:
         self.__actors = []
         self.__logger.info("Create environment...")
         self.__init()
-        self.__colliding = False
+        self.__colliding = Lock()
 
     def __init(self):
         self.vehicle = Vehicle(
@@ -71,9 +72,13 @@ class Environment:
                 actor.destroy()
 
     def __on_collision(self, event):
-        if not self.__colliding:
-            self.__colliding = True
-            self.__logger.info(f"{self.vehicle.name()} vehicle collide...")
-            time.sleep(1)
-            self.reset()
-            self.__colliding = False
+        try:
+            self.__colliding.acquire()
+            try:
+                self.__logger.info(f"{self.vehicle.name()} vehicle collide...")
+                time.sleep(2)
+                self.reset()
+            finally:
+                self.__colliding.release()
+        except RuntimeError:
+            return

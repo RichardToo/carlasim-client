@@ -8,6 +8,7 @@ from carla.libcarla import Transform
 class Actor(Enum):
     TESLA_MODEL_3 = 'model3'
     RGB_CAMERA = 'sensor.camera.rgb'
+    COLLISION_SENSOR = 'sensor.other.collision'
 
 
 class ActorBuilder:
@@ -52,8 +53,15 @@ def build_vehicle(world, actor_name):
         .build()
 
 
+def build_collision_sensor(world, vehicle, location):
+    return ActorBuilder(world, Actor.COLLISION_SENSOR) \
+        .spawn_point(Transform(location)) \
+        .attach_to(vehicle.wrapped()) \
+        .build()
+
+
 def build_camera(world, screen_size, vehicle, location):
-    camera = ActorBuilder(world, Actor.RGB_CAMERA) \
+    return ActorBuilder(world, Actor.RGB_CAMERA) \
         .attr('image_size_x', screen_size[0]) \
         .attr('image_size_y', screen_size[1]) \
         .attr('fov', 110) \
@@ -62,4 +70,3 @@ def build_camera(world, screen_size, vehicle, location):
         .spawn_point(Transform(location)) \
         .attach_to(vehicle.wrapped()) \
         .build()
-    return camera

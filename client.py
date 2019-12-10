@@ -14,11 +14,8 @@ def loop(game): pass
 SCREEN_SIZE = (1280, 720)
 APP_NAME = 'client'
 
-try:
-    logger = initialize_logger(APP_NAME)
-    client = CarlaClient()
-    env = Environment(client.get_world(), APP_NAME, SCREEN_SIZE)
-    env.init()
-    env.loop(loop)
-finally:
-    env.close()
+logger = initialize_logger(APP_NAME)
+client = CarlaClient()
+env = Environment(client.get_world(), APP_NAME, SCREEN_SIZE)
+env.loop(loop)
+env.close()

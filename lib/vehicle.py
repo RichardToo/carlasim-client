@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 from carla.libcarla import VehicleControl
 
@@ -5,6 +7,12 @@ from carla.libcarla import VehicleControl
 class Vehicle:
     def __init__(self, vehicle):
         self.__vehicle = vehicle
+
+    def random_location(self, world):
+        self.location(random.choice(world.get_map().get_spawn_points()))
+
+    def location(self, transform):
+        self.__vehicle.set_transform(transform)
 
     def speed(self):
         v = self.__vehicle.get_velocity()
